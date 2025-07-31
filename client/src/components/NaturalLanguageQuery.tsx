@@ -382,7 +382,7 @@ export default function NaturalLanguageQueryChat() {
         formData.append("message", currentQuery);
         // console.log("Form data sending : ", formData);
         response = await axios.post(
-          "http://codeshield-web-prod-server.vercel.app/image-analysis",
+          "https://codeshield-web-prod-server.vercel.app/image-analysis",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -392,7 +392,7 @@ export default function NaturalLanguageQueryChat() {
         // Handle text query
         // console.log("Sending query:", currentQuery);
         response = await axios.post(
-          "http://codeshield-web-prod-server.vercel.app/query/false",
+          "https://codeshield-web-prod-server.vercel.app/query/false",
           currentQuery,
           {
             headers: { "Content-Type": "text/plain" },
