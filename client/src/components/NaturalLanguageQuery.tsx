@@ -104,10 +104,6 @@ export default function NaturalLanguageQueryChat() {
 
   const fetchRecommendations = async () => {
     try {
-
-      // // Replace with your actual recommendations endpoint
-      // const response = await axios.get("http://localhost:3000/recommendations");
-      // setRecommendations(response.data);
       setRecommendations([
         {
           id: "1",
@@ -386,7 +382,7 @@ export default function NaturalLanguageQueryChat() {
         formData.append("message", currentQuery);
         // console.log("Form data sending : ", formData);
         response = await axios.post(
-          "http://localhost:3000/image-analysis",
+          "http://codeshield-web-prod-server.vercel.app/image-analysis",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -396,7 +392,7 @@ export default function NaturalLanguageQueryChat() {
         // Handle text query
         // console.log("Sending query:", currentQuery);
         response = await axios.post(
-          "http://localhost:3000/query/false",
+          "http://codeshield-web-prod-server.vercel.app/query/false",
           currentQuery,
           {
             headers: { "Content-Type": "text/plain" },

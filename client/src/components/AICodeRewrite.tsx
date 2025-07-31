@@ -67,7 +67,7 @@ export default function AICodeRewrite({ vulnerabilities }: AICodeRewriteProps) {
     setActiveTab("rewritten")
     setShouldAnimate(true)
     setRewrittenCode("") // Clear previous output
-    const url = "http://localhost:3000/ai"
+    const url = "http://codeshield-web-prod-server.vercel.app/ai"
     const prefixInfo =
       "Optimize and correct the following code to make it the best version possible, ensuring it is efficient, free from vulnerabilities, and adheres to best practices. Provide only the corrected and optimized code without any explanation or description.And also don't send any unneccessary comment, but you can send examples to use that rewritten code and any information you think that user needs to know to use that rewritten code. \n\n";
     const message = prefixInfo + originalCode;
