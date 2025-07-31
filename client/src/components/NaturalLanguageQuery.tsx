@@ -341,9 +341,9 @@ export default function NaturalLanguageQueryChat() {
     }
   };
 
-  const triggerImageSelect = () => {
-    fileInputRef.current?.click();
-  };
+  // const triggerImageSelect = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   const handleQuery = async () => {
     if (!query.trim() && !selectedImage) return;
@@ -384,7 +384,7 @@ export default function NaturalLanguageQueryChat() {
         const formData = new FormData();
         formData.append("image", currentImage);
         formData.append("message", currentQuery);
-        console.log("Form data sending : ", formData);
+        // console.log("Form data sending : ", formData);
         response = await axios.post(
           "http://localhost:3000/image-analysis",
           formData,
@@ -394,7 +394,7 @@ export default function NaturalLanguageQueryChat() {
         );
       } else {
         // Handle text query
-        console.log("Sending query:", currentQuery);
+        // console.log("Sending query:", currentQuery);
         response = await axios.post(
           "http://localhost:3000/query/false",
           currentQuery,
@@ -721,14 +721,14 @@ export default function NaturalLanguageQueryChat() {
                 }
                 className="flex-grow bg-white text-black border-gray-300 pr-10"
               />
-              <button
+              {/* <button
                 type="button"
                 onClick={triggerImageSelect}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors"
                 title="Attach image"
               >
                 <ImageIcon className="w-4 h-4 text-gray-500" />
-              </button>
+              </button> */}
             </div>
             <Button
               type="submit"

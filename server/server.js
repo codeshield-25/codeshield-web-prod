@@ -7,8 +7,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const { VOTD_DATA } = require("./db.json");
 const { json } = require("body-parser");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+// const multer = require("multer");
+// const upload = multer({ dest: "uploads/" });
 const vulnerabilities = require("./newData.json");
 
 const app = express();
@@ -342,14 +342,14 @@ app.post("/scanGit", (req, res) => {
 
 async function AIRewrite(prompt) {
   const stream = await ai.models.generateContent({
-    model: "gemini-2.5-flash-preview-04-17",
+    model: "gemini-1.5-flash",
     contents: prompt,
     config: {
       systemInstruction:
         "You are code-rewriter, converting vulnerable code to a secure code. You just give a piece of code nothing else.",
     },
   });
-  console.log(stream.candidates[0].content);
+  // console.log(stream.candidates[0].content);
   return stream.candidates[0].content.parts[0].text;
 }
 
@@ -363,7 +363,7 @@ app.post("/ai", async (req, res) => {
 
 async function NaturalQuery(prompt) {
   const stream = await ai.models.generateContent({
-    model: "gemini-2.5-flash-preview-04-17",
+    model: "gemini-1.5-flash",
     contents: prompt,
     config: {
       systemInstruction:
@@ -401,31 +401,33 @@ app.post("/query/:quickScan", async (req, res) => {
   }
 });
 
-async function ImageAnalysis(image, prompt) {
-  const myfile = await ai.files.upload({
-    file: image,
-    config: { mimeType: "image/jpeg" },
-  });
 
-  const stream = await ai.models.generateContent({
-    model: "gemini-2.5-flash-preview-04-17",
-    contents: GenAI.createUserContent([
-      GenAI.createPartFromUri(myfile.uri, myfile.mimeType),
-      prompt,
-    ]),
-  });
-  // console.log(stream.candidates[0].content.parts[0].text);
-  return stream.candidates[0].content.parts[0].text;
-}
+// async function ImageAnalysis(image, prompt) {
 
-app.post("/image-analysis", upload.single("image"), async (req, res) => {
-  console.log("Reqest getting : ", req.body);
-  const filePath = req.file.path;
-  const { message } = req.body;
-  const data = await ImageAnalysis(filePath, message);
-  fs.unlinkSync(filePath);
-  res.send(data);
-});
+//   const myfile = await ai.files.upload({
+//     file: image,
+//     config: { mimeType: "image/jpeg" },
+//   });
+
+//   const stream = await ai.models.generateContent({
+//     model: "gemini-2.5-flash-preview-04-17",
+//     contents: GenAI.createUserContent([
+//       GenAI.createPartFromUri(myfile.uri, myfile.mimeType),
+//       prompt,
+//     ]),
+//   });
+//   // console.log(stream.candidates[0].content.parts[0].text);
+//   return stream.candidates[0].content.parts[0].text;
+// }
+
+// app.post("/image-analysis", upload.single("image"), async (req, res) => {
+//   console.log("Reqest getting : ", req.body);
+//   const filePath = req.file.path;
+//   const { message } = req.body;
+//   const data = await ImageAnalysis(filePath, message);
+//   fs.unlinkSync(filePath);
+//   res.send(data);
+// });
 
 // ✅ Endpoint 1: Get VOTD by Date
 app.get("/votd/:date", (req, res) => {
