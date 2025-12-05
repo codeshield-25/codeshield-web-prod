@@ -12,13 +12,31 @@ const { json } = require("body-parser");
 const vulnerabilities = require("./newData.json");
 
 const app = express();
+const allowedOrigins = [
+  "https://www.codeshield.in",
+  "https://codeshield.in",
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5173",
+];
 
 app.use(
   cors({
-    origin: "*", // Allow requests from React
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 // Middleware to parse JSON request bodies and plain text
 app.use(express.json());
@@ -342,7 +360,7 @@ app.post("/scanGit", (req, res) => {
 
 async function AIRewrite(prompt) {
   const stream = await ai.models.generateContent({
-    model: "gemini-2.5-pro",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       systemInstruction:
@@ -363,7 +381,7 @@ app.post("/ai", async (req, res) => {
 
 async function NaturalQuery(prompt) {
   const stream = await ai.models.generateContent({
-    model: "gemini-2.5-pro",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       systemInstruction:
